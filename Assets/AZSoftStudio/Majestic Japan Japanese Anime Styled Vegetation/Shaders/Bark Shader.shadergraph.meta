@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: a5ee9cad692ab894992178884e9f30ea
+ScriptedImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 2
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+  script: {fileID: 11500000, guid: 625f186215c104763be7675aa2d941aa, type: 3}
+AssetOrigin:
+  serializedVersion: 1
+  productId: 307015
+  packageName: 'Majestic Japan: Japanese Anime Styled Vegetation'
+  packageVersion: 2025.00.0
+  assetPath: Assets/AZSoftStudio/Majestic Japan Japanese Anime Styled Vegetation/Shaders/Bark
+    Shader.shadergraph
+  uploadId: 733584

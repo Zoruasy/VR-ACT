@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: dc25fd050008eb9498de733798756be6
+timeCreated: 1462255886
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 62038
+  packageName: Realistic Hail Set
+  packageVersion: 1.0
+  assetPath: Assets/Realistic Hail Set/Materials/Particle - Med.mat
+  uploadId: 115868

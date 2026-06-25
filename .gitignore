@@ -1,0 +1,44 @@
+# Unity generated folders
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+
+# Visual Studio / Rider / IDE
+.vs/
+.vscode/
+*.csproj
+*.sln
+*.user
+*.userprefs
+*.pidb
+*.booproj
+
+# Unity backup / debug folders
+*_BackUpThisFolder_ButDontShipIt*
+*DoNotShip*
+[Bb]urst[Dd]ebug[Ii]nformation*/
+
+# Builds / APKs
+*.apk
+*.aab
+*.exe
+*.zip
+
+# OS files
+.DS_Store
+Thumbs.db
+
+.plastic/
+.utmp/
+.vsconfig
+Unity.gitignore
+ignore.conf
+.plastic/
+.utmp/
+.vsconfig
+Unity.gitignore
+ignore.conf

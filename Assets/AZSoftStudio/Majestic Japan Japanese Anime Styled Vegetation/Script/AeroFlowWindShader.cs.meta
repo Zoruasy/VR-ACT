@@ -1,0 +1,18 @@
+fileFormatVersion: 2
+guid: 21613d62688eff842ba9481f54a7bea1
+MonoImporter:
+  externalObjects: {}
+  serializedVersion: 2
+  defaultReferences: []
+  executionOrder: 0
+  icon: {fileID: 2800000, guid: c13cd5ca28fdf2d469869036ca23b49d, type: 3}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 307015
+  packageName: 'Majestic Japan: Japanese Anime Styled Vegetation'
+  packageVersion: 2025.00.0
+  assetPath: Assets/AZSoftStudio/Majestic Japan Japanese Anime Styled Vegetation/Script/AeroFlowWindShader.cs
+  uploadId: 733584

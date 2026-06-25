@@ -1,0 +1,15 @@
+fileFormatVersion: 2
+guid: 60dd8028af6705040913c9539054d4af
+timeCreated: 1462257421
+licenseType: Store
+NativeFormatImporter:
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
+AssetOrigin:
+  serializedVersion: 1
+  productId: 62038
+  packageName: Realistic Hail Set
+  packageVersion: 1.0
+  assetPath: Assets/Realistic Hail Set/Prefabs/Hail - Heavy - NoExternalForces NoGround.prefab
+  uploadId: 115868
