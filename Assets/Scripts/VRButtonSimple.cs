@@ -8,12 +8,12 @@ public class VRButtonSimple : MonoBehaviour
     public XRSimpleInteractable interactable;
     public AudioSource audioSource;
 
-    [Header("Alarm fixed stop time")]
-    public float alarmStopAtSeconds = 257f;
+    [Header("Auto stop (loop)")]
+    public float stopAfterSeconds = 262f; // 4:22 = 262 sec
 
     [Header("VFX (light/slash)")]
     public ParticleSystem slashVfx;
-    public float startVfxAfterSeconds = 151f;
+    public float startVfxAfterSeconds = 150f; // 2:31 = 151 sec
 
     private Coroutine stopRoutine;
     private Coroutine vfxStartRoutine;
@@ -26,7 +26,6 @@ public class VRButtonSimple : MonoBehaviour
     void Awake()
     {
         buttonRenderer = GetComponent<Renderer>();
-
         if (buttonRenderer != null)
             originalColor = buttonRenderer.material.color;
     }
@@ -39,7 +38,7 @@ public class VRButtonSimple : MonoBehaviour
         if (interactable != null)
         {
             interactable.selectEntered.AddListener(OnButtonPressed);
-            interactable.enabled = false; // eerst niet klikbaar
+            interactable.enabled = false; // locked until slash starts
         }
 
         if (slashVfx != null)
@@ -57,17 +56,14 @@ public class VRButtonSimple : MonoBehaviour
             slashVfx.Play(true);
 
         if (interactable != null)
-            interactable.enabled = true; // nu pas klikbaar
+            interactable.enabled = true;
 
         vfxStartRoutine = null;
     }
 
     public void OnButtonPressed(SelectEnterEventArgs args)
     {
-        // Na 1 keer drukken niet meer opnieuw klikbaar
-        if (interactable != null)
-            interactable.enabled = false;
-
+        // Stop previous active button if it's another button
         if (activeButton != null && activeButton != this && activeButton.audioSource != null)
         {
             activeButton.audioSource.Stop();
@@ -79,28 +75,21 @@ public class VRButtonSimple : MonoBehaviour
             activeButton.ResetColor();
         }
 
+        // Play this button sound
         if (audioSource != null)
         {
             audioSource.Stop();
             audioSource.loop = true;
+            audioSource.Play();
 
-            float remainingTime = alarmStopAtSeconds - Time.timeSinceLevelLoad;
-
-            if (remainingTime > 0f)
+            // Start timer ONLY the first time
+            if (stopRoutine == null)
             {
-                audioSource.Play();
-
-                if (stopRoutine != null)
-                    StopCoroutine(stopRoutine);
-
-                stopRoutine = StartCoroutine(StopLoopAfterTime(remainingTime));
-            }
-            else
-            {
-                audioSource.Stop();
+                stopRoutine = StartCoroutine(StopLoopAfterTime());
             }
         }
 
+        // Click = turn slash OFF
         if (slashVfx != null)
         {
             if (vfxStartRoutine != null)
@@ -116,14 +105,19 @@ public class VRButtonSimple : MonoBehaviour
         activeButton = this;
     }
 
-    private IEnumerator StopLoopAfterTime(float seconds)
+    private IEnumerator StopLoopAfterTime()
     {
-        yield return new WaitForSeconds(seconds);
+        yield return new WaitForSeconds(stopAfterSeconds);
 
         if (audioSource != null)
             audioSource.Stop();
 
         stopRoutine = null;
+
+        if (activeButton == this)
+            activeButton = null;
+
+        ResetColor();
     }
 
     private void SetButtonColor(Color color)
