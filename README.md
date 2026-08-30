@@ -1,325 +1,330 @@
-# README.md – VR ACT Unity Project
+# VR ACT – Unity Project
+
+## Over het project
+
+Dit is een VR prototype gemaakt in Unity rondom **ACT (Acceptance and Commitment Therapy)**. Het project is gericht op studentenwelzijn, vooral rondom stress en angst.
+
+Het idee is om ACT niet alleen uit te leggen met audio, maar de gebruiker ook echt iets te laten **doen en ervaren in VR**. Denk aan rondkijken en bewegen.
+
+De stijl is rustig en kleurrijk, met pastelkleuren nature aspecten. 
 
 ---
 
-## Projectoverzicht
+## Project installeren en openen
 
-Dit project is een **VR‑prototype ontwikkeld in Unity** waarin **ACT‑therapie (Acceptance and Commitment Therapy)** wordt vertaald naar een **fysieke, ervaringsgerichte VR‑omgeving**. Het project is ontstaan tijdens een stage en richt zich op **studentenwelzijn**, met aandacht voor **angst en stress**.
+**Gebruik GitHub Desktop om het project binnen te halen.**
 
-Het project is ontwikkeld door **Britney Krabbendam (CMGT)** en is het **eerste VR‑project**. De visuele stijl is geïnspireerd op een **Ghibli‑achtige look**, met **pastel en stylized nature assets**.
+1. Installeer **GitHub Desktop**
+2. Clone de repository via GitHub Desktop
+3. Laat het project op de locatie staan waar GitHub Desktop hem heeft opgeslagen
+4. Open het Unity project **vanuit deze filelocatie** (want het is een LS bestand)
+5. Gebruik dezelfde Unity versie als waarin het project gemaakt is
 
-De kern van het project is dat de gebruiker **niet passief luistert**, maar **actief deelneemt** door fysieke interactie, verbeelding en reflectie. VR wordt hierbij ingezet als **ondersteunend middel**, niet als vervanging van therapie.
+**Verplaats het project niet zomaar naar een andere map.**
+Als je het project vanaf een verkeerde locatie opent of bestanden los verplaatst, kan Unity bepaalde assets niet goed laden.
 
----
-
-## Doel van het project
-
-* ACT‑principes vertalen naar een **rustige VR‑omgeving**
-* Focus op **lichaamsbewustzijn, acceptatie en waarden**
-* Creëren van een **emotioneel veilige omgeving**
-* Verminderen van **claustrofobie, overprikkeling en verwarring**
-* Toegankelijk voor gebruikers met **weinig tot geen VR‑ervaring**
-
-**Belangrijk uitgangspunt:**
-
-> **Uitnodigen om dingen te doen, niet voorschrijven.**
+Maak voor de zekerheid altijd eerst een backup voordat je grote dingen aanpast of Unity/packages gaat updaten.
 
 ---
 
-## Concept & Therapievisie
+## Gebruikte techniekieken
 
-### ACT in VR
+* Unity
+* URP
+* XR Interaction Toolkit (Action-Based)
+* OpenXR
+* VR / standalone headset
 
-Het project maakt gebruik van de volgende ACT‑principes:
-
-* Acceptatie
-* Mindfulness / hier‑en‑nu
-* Waarden (wat is belangrijk voor mij?)
-* Zelfregie
-
-Uit gesprekken met experts kwam naar voren:
-
-* Alleen audio of instructie is te **rigide**
-* Het **fysieke lichaam** moet actief betrokken worden
-* De gebruiker moet **zelf keuzes** kunnen maken
-* **Reflectie** (bijv. journaling of gesprek) is essentieel na afloop
-
-Daarom ligt de focus op:
-
-* **Fysieke handelingen** (zitten, kijken, draaien, voelen)
-* **Verbeelding via omgeving** (auto, route, haven, natuur)
-* **Rustige, warme setting**
+De code van het project staat bij de scripts in Unity.
 
 ---
 
-## Technische stack
+## Hoe de ervaring werkt
 
-* **Unity (VR)**
-* **URP (Universal Render Pipeline)**
-* **XR Interaction Toolkit (Action‑Based)**
-* **OpenXR**
-* Target platform: **VR‑headset (Android / Standalone, afhankelijk van build)**
+De hoofdscene is een soort **roadtrip/oefening in een auto**.
 
----
+De auto zelf beweegt niet. Dit is bewust gedaan, omdat een bewegende auto in VR snel misselijkheid kan veroorzaken.
 
-## Projectstructuur (globaal)
+De gebruiker kan onder andere:
 
-* **Hoofdscene** – auto / roadtrip‑oefening
-* **Omgevingen** – natuur, snelweg, horizon
-* **Interacties** – knoppen, radio, teleport
-* **Audio** – radio, ambient sound
-Scripts staan alle code in!
+* Knoppen gebruiken
+* Audio/radio starten
+* Rondkijken en de omgeving ervaren
+* Via een fade rustig de ervaring ingaan
 
-> De lobby scene is verwijderd. In overleg met een psycholoog is besloten dat een aparte lobby niet nodig is, omdat de introductie in de auto voldoende rust en context biedt.
+Er was eerst een aparte lobby, maar deze is verwijderd. De introductie in de auto geeft al genoeg uitleg en rust.
 
 ---
 
-## Belangrijke systemen & keuzes
+## XR & interactie
 
-### XR Origin & interactie
+Het project gebruikt een **XR Origin (Action-Based)**.
 
-* **XR Origin (Action‑Based)** gebruikt
-* Interactie via **trigger (Activated‑event)**
-* **OnMouseDown wordt niet gebruikt** (werkt niet in VR)
-* XR Poke is alleen nodig voor fysieke hand‑interactie (niet toegepast)
+Voor knoppen wordt vooral `XR Simple Interactable` gebruikt. Interacties worden gekoppeld via het **Activated-event**.
 
----
+Gebruik geen `OnMouseDown`, want dit werkt niet goed voor VR interactie.
 
-### Knoppen
+### Nieuwe knop toevoegen
 
-* Eigen script: **VRButtonSimple**
-* Werking:
-
-  * Eerst **alle andere audio stoppen** via `AudioManager`
-  * Daarna **eigen audio afspelen**
-* Visuele feedback:
-
-  * Knop verandert van kleur bij hover / activatie
+1. Maak een GameObject
+2. Voeg `XR Simple Interactable` toe
+3. Koppel bij `Activated` de gewenste functie
+4. Voeg eventueel kleurfeedback toe
 
 ---
 
-### Auto & beweging
+## Belangrijkste scripts
 
-* Auto **beweegt niet actief**
+### SpawnPoint.cs
 
-  * Bewegende auto veroorzaakte misselijkheid
-* XR Origin wordt **child van de auto** bij instappen
-* Instappen via knop + fade
-* Radio start met vertraging via coroutine:
+Zet de XR Origin op de juiste startpositie nadat de tracking is geïnitialiseerd. Alleen de Y-rotatie wordt aangepast.
 
-```csharp
-StartCoroutine(PlayRadioAfterDelay(20f));
-```
+### FadeCube.cs
 
----
+Regelt de fade aan het begin. Er zit een transparante cube om de camera die langzaam verdwijnt, dus houd hier rekening mee.
 
-### Radio & volume
+### ButtonSound.cs
 
-* Centrale **RadioManager** met `AudioSource`
-* Volume‑draaiknop is verwijderd
+Speelt audio af wanneer een interactable wordt geselecteerd en geeft korte visuele feedback.
 
-  * Werd niet als natuurlijk ervaren
-  * Vervangen door **drukknoppen**
+### VRButtonSimple.cs
 
----
+Regelt de belangrijkste knoplogica. Andere audio wordt eerst gestopt voordat nieuwe audio wordt afgespeeld.
 
-### Fade‑in effect (grijs → normaal)
+### RadioManager
 
-**Huidige oplossing:**
-
-* Geen UI‑overlay
-* Cube rondom de camera
-* URP **Unlit Transparent** materiaal
-* Cube is child van de camera
-* Script verlaagt alpha na 5 seconden
-
-**Effect:**
-
-* Scene start volledig grijs
-* Beeld bloeit langzaam open
+Beheert de audio van de radio.
 
 ---
 
-## Graphics & optimalisatie
+## Graphics
 
-### Bomen & foliage
+De lighting is **gebaked**, omdat dynamische lighting minder goed werkte in VR.
 
-Probleem:
+Bij bomen en bladeren kan op afstand wat pixel/noise zichtbaar zijn. Hier is veel mee getest. Uiteindelijk is gekozen voor een rustigere low-poly/stylized stijl in plaats van heel veel detail.
 
-* Pixelated / noisy bladeren, vooral op afstand
+Voor foliage wordt onder andere gebruikgemaakt van:
 
-Oplossing:
-
-* Surface Type: **Transparent**
-* **Alpha Clipping** aan
-* Juiste leaf‑texture in Base Map
-
-Wat is geprobeerd:
-
-* Verschillende URP‑shaders
-* Unlit vs Lit
-* Meerdere foliage‑assets
-* Bomen verwijderen / vervangen
-* Verschillende LOD‑instellingen
-
-Conclusie:
-
-* Pixelnoise blijft deels aanwezig in VR
-* Bewuste keuze gemaakt voor **rust boven detail**
-
-Low‑poly assets zijn getest en toegepast waar mogelijk, omdat complexe foliage visueel en technisch slecht werkt in VR.
+* Transparent Surface Type
+* Alpha Clipping
+* Leaf texture in de Base Map
 
 ---
 
-### Lighting
+## Bekende Unity-problemen
 
-* Lighting is **gebaked**
-* Dynamische lighting gaf problemen in VR
+Het project heeft eerder problemen gehad met verkeerde/verouderde XR-packages en Unity-updates. Hierdoor konden bijvoorbeeld de XR Origin of bepaalde packages verdwijnen.
 
----
-
-## Bekende problemen & lessons learned
-
-### Unity / XR‑issues
-
-Oorzaken:
-
-* Wifi‑uitval tijdens updates
-* Verouderde of verkeerde XR‑packages
-
-Gevolgen:
-
-* Extreme laadtijden (10–12 minuten)
-* Missing XR Origin
-* Compile‑errors
-
-Verwijderd uit `manifest.json`:
+Uit `manifest.json` zijn eerder deze packages verwijderd:
 
 ```text
 com.unity.feature.vr
 com.unity.xr.androidxr-openxr
 ```
 
-Vervangen door correcte OpenXR‑setup.
+Daarna is OpenXR opnieuw correct ingesteld.
+
+Als het project ineens veel errors geeft na een update: **niet meteen alles gaan aanpassen.** Controleer eerst de Unity-versie, packages en OpenXR-instellingen.
 
 ---
 
-### Build‑problemen
+## Git & backups
 
-* Random build‑errors
-* Shader‑hangs
-* Soms alleen opgelost door:
+Het project gebruikt **Git LFS** vanwege de grote Unity-bestanden.
 
-  * Terug naar een vorige versie
-  * Nieuw project aanmaken
+Aanrader:
 
----
-
-## GitHub & backups
-
-Problemen:
-
-* Grote bestanden
-* Push‑errors
-
-Oplossingen:
-
-* **Git LFS** gebruikt
-* Nieuwe repository aangemaakt
-
-**Advies:**
-
-* Dagelijkse backups maken
-* Pas pushen als het project stabiel is
-* Niet zomaar Unity‑updates installeren
+* Werk via GitHub Desktop
+* Maak regelmatig een backup
+* Update Unity niet zomaar
+* Push pas wanneer het project stabiel werkt
+* Verplaats niet handmatig allemaal projectbestanden
 
 ---
 
-## Ontwerpprincipes
+## Als je verder wilt werken
 
-* **Rust is key**
-* Warm welkom (geen harde overgangen)
-* Eén knop per handeling
-* Minimaal controllergebruik
-* Geen claustrofobische ruimtes
+Controleer eerst:
 
----
+* Of je de juiste Unity-versie gebruikt
+* Of OpenXR actief staat
+* Of XR Plugin Management goed staat
+* Of er een controller interaction profile actief is
+* Of de XR Origin aanwezig is
+* Of het project vanuit de juiste filelocatie is geopend
 
-## How to continue this project
+Test veranderingen het liefst ook echt in de headset.
 
-### 1. Start veilig
+## Belangrijk
 
-* Maak altijd eerst een **backup**
-* Gebruik dezelfde **Unity‑versie**
-* Open het project **zonder upgraden**
-* Test XR direct in de headset
+Het belangrijkste aan dit project is niet om zoveel mogelijk functies toe te voegen. De VR ervaring moet vooral **rustig, duidelijk en niet overweldigend** blijven. Dit kan de gebruiker afschrikken.
 
----
 
-### 2. XR & Unity‑setup controleren
+ENGLISH
 
-* XR Plugin Management actief
-* OpenXR correct ingesteld
-* Minstens één controller‑interaction profile
-* XR Origin (Action‑Based) aanwezig
+# VR ACT – Unity Project
 
----
+## About the project
 
-### 3. Interacties uitbreiden (knoppen)
+This is a VR prototype made in Unity based around **ACT (Acceptance and Commitment Therapy)**. The project focuses on student wellbeing, especially stress and anxiety.
 
-Stappen:
+The idea is not to explain ACT through audio only, but to let the user actually **do and experience things in VR**, such as looking around and moving.
 
-1. Nieuw GameObject maken
-2. `XR Simple Interactable` toevoegen
-3. `Activated` koppelen aan functie
-4. Visuele feedback toevoegen
-
-Gebruik **geen `OnMouseDown`**.
+The visual style is calm and colorful, with pastel colors and nature elements.
 
 ---
 
-## Code‑uitleg (belangrijkste scripts)
+## Installing and opening the project
+
+**Use GitHub Desktop to download the project.**
+
+1. Install **GitHub Desktop**
+2. Clone the repository through GitHub Desktop
+3. Keep the project in the location where GitHub Desktop saved it
+4. Open the Unity project **from this file location** (because it uses LFS)
+5. Use the same Unity version that was used to create the project
+
+**Do not move the project to another folder.**
+
+If you open the project from the wrong location or move files separately, Unity may not load certain assets correctly.
+
+It is also recommended to make a backup before making big changes or updating Unity/packages.
+
+---
+
+## Technologies used
+
+* Unity
+* URP
+* XR Interaction Toolkit (Action-Based)
+* OpenXR
+* VR / standalone headset
+
+All project code can be found in the scripts in Unity.
+
+---
+
+## How the experience works
+
+The main scene is a **road trip exercise inside a car**.
+
+The car itself does not move. This was done on purpose because a moving car can easily cause motion sickness in VR.
+
+The user can:
+
+* Use buttons
+* Start audio/radio
+* Look around and experience the environment
+* Enter the experience through a slow fade
+
+There used to be a separate lobby scene, but this was removed. The introduction inside the car already gives enough explanation and creates a calm start.
+
+---
+
+## XR & interaction
+
+The project uses an **XR Origin (Action-Based)**.
+
+Buttons mainly use `XR Simple Interactable`. Interactions are connected through the **Activated event**.
+
+Do not use `OnMouseDown`, because this does not work properly for VR interaction.
+
+### Adding a new button
+
+1. Create a GameObject
+2. Add `XR Simple Interactable`
+3. Connect the function to `Activated`
+4. Add color feedback if needed
+
+---
+
+## Main scripts
 
 ### SpawnPoint.cs
 
-* Wacht 0.1 seconde zodat XR‑tracking eerst initialiseert
-* Zet daarna positie en **alleen Y‑rotatie** van XR Origin
-
----
+Places the XR Origin at the correct starting position after tracking has initialized. Only the Y rotation is changed.
 
 ### FadeCube.cs
 
-* Cube als child van camera
-* Transparant URP‑materiaal
-* Alpha fade naar 0
-
-Resultaat: rustige visuele overgang zonder UI.
-
----
+Controls the fade at the beginning of the experience. A transparent cube is placed around the camera and slowly fades away, so keep this in mind when making changes to the camera.
 
 ### ButtonSound.cs
 
-* Gebruikt `XRBaseInteractable`
-* Reageert op `selectEntered`
-* Speelt geluid + korte kleurfeedback
-
----
+Plays audio when an interactable is selected and gives short visual feedback.
 
 ### VRButtonSimple.cs
 
-* Centrale knoplogica
-* Stopt eerst alle audio
-* Speelt daarna eigen audio
-* Zorgt dat maar **één knop tegelijk actief** is
+Handles the main button logic. Other audio is stopped before new audio starts playing.
+
+### RadioManager
+
+Controls the radio audio.
 
 ---
 
-## Laatste advies
+## Graphics
 
-Dit project is **proces‑gedreven**, niet feature‑gedreven.
+The lighting is **baked**, because dynamic lighting did not work as well in VR.
 
-Meer functies toevoegen ≠ betere ervaring.
+Trees and leaves can look slightly pixelated/noisy from a distance. Different solutions were tested, but in the end a calmer low-poly/stylized look worked better than adding a lot of detail.
 
-Test altijd met echte gebruikers en bewaak **rust en veiligheid**.
+For foliage, the project uses:
 
-*Einde README*
+* Transparent Surface Type
+* Alpha Clipping
+* Leaf texture in the Base Map
+
+---
+
+## Known Unity issues
+
+The project has had some problems with outdated or incorrect XR packages and Unity updates. This could cause things like the XR Origin or certain packages to disappear.
+
+These packages were previously removed from `manifest.json`:
+
+```text
+com.unity.feature.vr
+com.unity.xr.androidxr-openxr
+```
+
+OpenXR was then set up again correctly.
+
+If the project suddenly has a lot of errors after an update, **do not immediately start changing everything**. First check the Unity version, packages and OpenXR settings.
+
+---
+
+## Git & backups
+
+The project uses **Git LFS** because of the large Unity files.
+
+Recommended:
+
+* Work through GitHub Desktop
+* Make regular backups
+* Do not update Unity without a reason
+* Push when the project is stable
+* Do not manually move project files around
+
+---
+
+## Continuing the project
+
+Before continuing, check:
+
+* You are using the correct Unity version
+* OpenXR is enabled
+* XR Plugin Management is set up correctly
+* A controller interaction profile is enabled
+* The XR Origin is present
+* The project was opened from the correct file location
+
+It is best to test changes directly in the VR headset as well.
+
+## Important
+
+The goal of this project is not to add as many features as possible. The VR experience should mainly stay **calm, clear and not overwhelming**.
+
+When in doubt, test first before adding more.
+
+
+Bij twijfel: eerst testen voordat je meer toevoegt.
