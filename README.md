@@ -2,9 +2,9 @@
 
 ## Over het project
 
-Dit is een VR prototype gemaakt in Unity rondom **ACT (Acceptance and Commitment Therapy)**. Het project is gericht op studentenwelzijn, vooral rondom stress en angst.
+Dit is een VR prototype gemaakt in Unity rondom ACT (Acceptance and Commitment Therapy). Het project is gericht rondom stress en angst.
 
-Het idee is om ACT niet alleen uit te leggen met audio, maar de gebruiker ook echt iets te laten **doen en ervaren in VR**. Denk aan rondkijken en bewegen.
+Het idee is om ACT niet alleen uit te leggen met audio, maar de gebruiker ook echt iets te laten doen en ervaren in VR. Denk aan rondkijken, bewegen en interactief bezig zijn.
 
 De stijl is rustig en kleurrijk, met pastelkleuren nature aspecten. 
 
@@ -12,13 +12,13 @@ De stijl is rustig en kleurrijk, met pastelkleuren nature aspecten.
 
 ## Project installeren en openen
 
-**Gebruik GitHub Desktop om het project binnen te halen.**
+**Gebruik GitHub desktop om het project eerst binnen te halen**
 
-1. Installeer **GitHub Desktop**
-2. Clone de repository via GitHub Desktop
-3. Laat het project op de locatie staan waar GitHub Desktop hem heeft opgeslagen
-4. Open het Unity project **vanuit deze filelocatie** (want het is een LS bestand)
-5. Gebruik dezelfde Unity versie als waarin het project gemaakt is
+1. Installeer GitHub desktop
+2. Clone de repository via GitHub desktop
+3. Laat het project op de locatie staan waar GitHub desktop hem heeft opgeslagen
+4. Open het Unity project vanuit deze filelocatie (want het is een LS bestand)
+5. Gebruik dezelfde unity versie met de versie waarin het project is gemaakt
 
 **Verplaats het project niet zomaar naar een andere map.**
 Als je het project vanaf een verkeerde locatie opent of bestanden los verplaatst, kan Unity bepaalde assets niet goed laden.
@@ -27,21 +27,21 @@ Maak voor de zekerheid altijd eerst een backup voordat je grote dingen aanpast o
 
 ---
 
-## Gebruikte techniekieken
+## Gebruikte technieken
 
 * Unity
 * URP
-* XR Interaction Toolkit (Action-Based)
+* XR Interaction Toolkit
 * OpenXR
-* VR / standalone headset
+* VR - standalone headset
 
 De code van het project staat bij de scripts in Unity.
 
 ---
 
-## Hoe de ervaring werkt
+## Hoe het werkt
 
-De hoofdscene is een soort **roadtrip/oefening in een auto**.
+De hoofdscene is een soort roadtrip/oefening in een auto
 
 De auto zelf beweegt niet. Dit is bewust gedaan, omdat een bewegende auto in VR snel misselijkheid kan veroorzaken.
 
@@ -60,7 +60,7 @@ Er was eerst een aparte lobby, maar deze is verwijderd. De introductie in de aut
 
 Het project gebruikt een **XR Origin (Action-Based)**.
 
-Voor knoppen wordt vooral `XR Simple Interactable` gebruikt. Interacties worden gekoppeld via het **Activated-event**.
+Voor knoppen wordt vooral `XR Simple Interactable` gebruikt. Interacties worden gekoppeld via het **Activated event**.
 
 Gebruik geen `OnMouseDown`, want dit werkt niet goed voor VR interactie.
 
@@ -113,7 +113,7 @@ Voor foliage wordt onder andere gebruikgemaakt van:
 
 ## Bekende Unity-problemen
 
-Het project heeft eerder problemen gehad met verkeerde/verouderde XR-packages en Unity-updates. Hierdoor konden bijvoorbeeld de XR Origin of bepaalde packages verdwijnen.
+Het project heeft eerder problemen gehad met verkeerde oude XR packages en Unity-updates. Hierdoor konden bijvoorbeeld de XR Origin of bepaalde packages verdwijnen.
 
 Uit `manifest.json` zijn eerder deze packages verwijderd:
 
@@ -124,17 +124,17 @@ com.unity.xr.androidxr-openxr
 
 Daarna is OpenXR opnieuw correct ingesteld.
 
-Als het project ineens veel errors geeft na een update: **niet meteen alles gaan aanpassen.** Controleer eerst de Unity-versie, packages en OpenXR-instellingen.
+Als het project ineens veel errors geeft na een update: niet meteen alles gaan aanpassen. Controleer eerst de Unity versie, packages en OpenXR instellingen.
 
 ---
 
 ## Git & backups
 
-Het project gebruikt **Git LFS** vanwege de grote Unity-bestanden.
+Het project gebruikt Git LFS vanwege de grote Unity bestanden.
 
 Aanrader:
 
-* Werk via GitHub Desktop
+* Werk via GitHub desktop
 * Maak regelmatig een backup
 * Update Unity niet zomaar
 * Push pas wanneer het project stabiel werkt
@@ -153,11 +153,11 @@ Controleer eerst:
 * Of de XR Origin aanwezig is
 * Of het project vanuit de juiste filelocatie is geopend
 
-Test veranderingen het liefst ook echt in de headset.
+Test veranderingen het liefst ook echt in de headset, zodat je de ervaring echt mee krijgt
 
 ## Belangrijk
 
-Het belangrijkste aan dit project is niet om zoveel mogelijk functies toe te voegen. De VR ervaring moet vooral **rustig, duidelijk en niet overweldigend** blijven. Dit kan de gebruiker afschrikken.
+Het belangrijkste aan dit project is niet om zoveel mogelijk functies toe te voegen. De VR ervaring moet vooral rustig, duidelijk en niet overweldigend blijven. Dit kan de gebruiker afschrikken.
 
 
 ENGLISH
